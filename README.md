@@ -1,5 +1,5 @@
 # Manga Library REST API
-A simple REST API for cataloguing manga built with Spring Boot.
+A simple REST API for tracking manga built with Spring Boot.
 
 ## Overview
 This project is a RESTful API built using Spring Boot that provides endpoints for searching for manga, managing user progress and collection, and creating curated lists.
