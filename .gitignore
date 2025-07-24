@@ -35,4 +35,5 @@ build/
 
 ### Others ###
 /data/library.db
+!data/
 class-diagram.excalidraw
