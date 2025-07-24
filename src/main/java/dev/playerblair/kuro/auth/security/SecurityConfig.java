@@ -6,6 +6,7 @@ import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
+import dev.playerblair.kuro.auth.UserRepository;
 import dev.playerblair.kuro.auth.service.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -42,8 +43,8 @@ public class SecurityConfig {
     }
 
     @Bean
-    public UserDetailsService userDetailsService() {
-        return new UserDetailsServiceImpl();
+    public UserDetailsService userDetailsService(UserRepository userRepository) {
+        return new UserDetailsServiceImpl(userRepository);
     }
 
     @Bean
