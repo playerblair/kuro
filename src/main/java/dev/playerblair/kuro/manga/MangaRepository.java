@@ -11,10 +11,4 @@ import java.util.Optional;
 
 @Repository
 public interface MangaRepository extends ListCrudRepository<Manga, Long> {
-
-    @Query("SELECT m FROM Manga m LEFT JOIN FETCH m.authors WHERE m.malId = :id")
-    Optional<Manga> findByIdWithAuthors(@Param("id") Long id);
-
-    @Query("SELECT m FROM Manga m WHERE m.malId IN :malIds")
-    List<Manga> findAllByMalIdsIn(@Param("malIds") List<Long> malId);
 }
