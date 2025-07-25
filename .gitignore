@@ -37,3 +37,4 @@ build/
 /data/library.db
 !data/
 class-diagram.excalidraw
+/src/main/resources/certs/private.pem
