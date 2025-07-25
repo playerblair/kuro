@@ -7,7 +7,6 @@ import dev.playerblair.kuro.manga.dto.MangaSearchResponse;
 import dev.playerblair.kuro.manga.dto.Pagination;
 import dev.playerblair.kuro.manga.exception.JikanApiMangaNotFoundException;
 import dev.playerblair.kuro.manga.model.*;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,7 +17,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClientException;
 
-import java.util.List;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
