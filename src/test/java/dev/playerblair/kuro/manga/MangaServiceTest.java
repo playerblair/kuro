@@ -151,7 +151,7 @@ public class MangaServiceTest {
                 RestClientException.class,
                 () -> mangaService.getManga(malId)
         );
-        assertThat("API Epic Fail").isEqualTo(exception.getMessage());
+        assertThat(exception.getMessage()).isEqualTo("API Epic Fail");
         verify(mangaClient).getManga(malId);
     }
 
