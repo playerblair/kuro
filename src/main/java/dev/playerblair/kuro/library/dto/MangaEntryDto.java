@@ -7,8 +7,8 @@ import dev.playerblair.kuro.library.model.Progress;
 public record MangaEntryDto(
         MangaDto manga,
         Progress progress,
-        Integer volumesRead,
         Integer chaptersRead,
+        Integer volumesRead,
         Integer rating,
         String notes
 ) {
