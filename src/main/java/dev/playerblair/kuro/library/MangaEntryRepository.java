@@ -17,9 +17,6 @@ public interface MangaEntryRepository extends ListCrudRepository<MangaEntry, Lon
     @Query("SELECT m FROM MangaEntry m WHERE m.user = :user")
     List<MangaEntry> findAllByUser(@Param("user") User user);
 
-    @Query("SELECT m FROM MangaEntry m WHERE m.user = :user and m.manga.malId = :malId")
-    Optional<MangaEntry> findAllByUserAndMalId(@Param("user") User user, @Param("malId") Long malId);
-
     @Query("SELECT Count(m) > 0 FROM MangaEntry m WHERE m.user = :user and m.manga.malId = :malId")
     boolean existsByUserAndMalId(@Param("user") User user, @Param("malId") Long malId);
 
@@ -29,7 +26,4 @@ public interface MangaEntryRepository extends ListCrudRepository<MangaEntry, Lon
     @Modifying
     @Query("DELETE FROM MangaEntry m WHERE m.user = :user AND m.manga.malId = :malId")
     int deleteByUserAndMalId(@Param("user") User user, @Param("malId") Long malId);
-
-    @Query("SELECT m FROM MangaEntry m WHERE m.user = :user AND m.manga.malId IN :malIds")
-    List<MangaEntry> findAllByUserAndMalIdsIn(@Param("user") User user, @Param("malIds") List<Long> malId);
 }

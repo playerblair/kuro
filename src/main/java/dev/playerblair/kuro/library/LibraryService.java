@@ -51,7 +51,7 @@ public class LibraryService {
         User user = tokenService.getUserFromAuthentication(authentication);
         log.debug("User (ID:{}) is fetching MangaEntry for Manga (malID:{}).", user.getId(), malId);
 
-        MangaEntry mangaEntry = mangaEntryRepository.findAllByUserAndMalId(user, malId)
+        MangaEntry mangaEntry = mangaEntryRepository.findByUserAndMalId(user, malId)
                 .orElseThrow(() -> new MangaEntryNotFoundException(malId));
 
         log.debug("Fetched MangaEntry for Manga (malID:{}) for User (ID:{}).", malId, user.getId());
@@ -116,8 +116,8 @@ public class LibraryService {
         return new MangaEntryDto(
                 mangaService.toMangaDto(mangaEntry.getManga()),
                 mangaEntry.getProgress(),
-                mangaEntry.getVolumesRead(),
                 mangaEntry.getChaptersRead(),
+                mangaEntry.getVolumesRead(),
                 mangaEntry.getRating(),
                 mangaEntry.getNotes()
         );
