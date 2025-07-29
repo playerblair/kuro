@@ -68,35 +68,35 @@ public class LibraryServiceTest {
                 .role("USER")
                 .build();
 
-        mangaDto = new MangaDto(
-                1L,
-                "Test Manga",
-                "Test Manga",
-                MangaType.MANGA,
-                100,
-                10,
-                Status.COMPLETED,
-                "test synopsis",
-                Set.of(new Author(1L, "Test Author", "http://www.example.com/authors/1")),
-                Set.of(Genre.ROMANCE),
-                "http://www.example.com/manga/1",
-                "http://www.example.com/manga/1/cover"
-        );
-
         manga = Manga.builder()
-                .malId(mangaDto.malId())
-                .title(mangaDto.title())
-                .titleEnglish(mangaDto.titleEnglish())
-                .type(mangaDto.type())
-                .chapters(mangaDto.chapters())
-                .volumes(mangaDto.volumes())
-                .status(mangaDto.status())
-                .synopsis(mangaDto.synopsis())
-                .authors(mangaDto.authors())
-                .genres(mangaDto.genres())
-                .url(mangaDto.url())
-                .imageUrl(mangaDto.imageUrl())
+                .malId(1L)
+                .title("Test Manga")
+                .titleEnglish("Test Manga")
+                .type(MangaType.MANGA)
+                .chapters(100)
+                .volumes(10)
+                .status(Status.COMPLETED)
+                .synopsis("test synopsis")
+                .authors(Set.of(new Author(1L, "Test Author", "http://www.example.com/authors/1")))
+                .genres(Set.of(Genre.ROMANCE))
+                .url("http://www.example.com/manga/1")
+                .imageUrl("http://www.example.com/manga/1/cover")
                 .build();
+
+        mangaDto = new MangaDto(
+                manga.getMalId(),
+                manga.getTitle(),
+                manga.getTitleEnglish(),
+                manga.getType(),
+                manga.getChapters(),
+                manga.getVolumes(),
+                manga.getStatus(),
+                manga.getSynopsis(),
+                manga.getAuthors(),
+                manga.getGenres(),
+                manga.getUrl(),
+                manga.getImageUrl()
+        );
 
         mangaEntry = MangaEntry.builder()
                 .user(testUser)
@@ -246,7 +246,7 @@ public class LibraryServiceTest {
     }
 
     @Test
-    public void updateMangaEntry_shouldReturnResponse() {
+    public void updateMangaEntry_shouldUpdateEntry() {
         // given
         Long malId = 1L;
         MangaEntry updated = MangaEntry.builder()

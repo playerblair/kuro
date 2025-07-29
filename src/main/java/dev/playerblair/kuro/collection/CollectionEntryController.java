@@ -35,9 +35,9 @@ public class CollectionEntryController {
     }
 
     @GetMapping("/collection/{id}")
-    public ResponseEntity<CollectionEntryDto> getVolumeEntry
+    public ResponseEntity<CollectionEntryDto> getCollectionEntry
             (@PathVariable @Min(1) Long id, Authentication authentication) {
-        CollectionEntryDto response = collectionEntryService.getCollectionEntryById(id, authentication);
+        CollectionEntryDto response = collectionEntryService.getCollectionEntry(id, authentication);
         return ResponseEntity.ok(response);
     }
 
@@ -53,7 +53,7 @@ public class CollectionEntryController {
             @Validated({ValidationGroups.Create.class, Default.class}) @RequestBody CollectionEntryRequest request,
             Authentication authentication
     ) {
-        CollectionEntryDto response = collectionEntryService.createVolumeEntry(request, authentication);
+        CollectionEntryDto response = collectionEntryService.createCollectionEntry(request, authentication);
         URI location = URI.create("/collection/" + response.id());
         return ResponseEntity.created(location).body(response);
     }

@@ -54,7 +54,7 @@ public class CollectionEntryService {
         return toMangaCollectionDto(collectionEntries);
     }
 
-    public CollectionEntryDto getCollectionEntryById(Long id, Authentication authentication) {
+    public CollectionEntryDto getCollectionEntry(Long id, Authentication authentication) {
         User user = tokenService.getUserFromAuthentication(authentication);
         log.debug("User (ID:{}) is fetching CollectionEntry (ID:{}).", user.getId(), id);
 
@@ -66,7 +66,7 @@ public class CollectionEntryService {
     }
 
     @Transactional
-    public CollectionEntryDto createVolumeEntry(CollectionEntryRequest request, Authentication authentication) {
+    public CollectionEntryDto createCollectionEntry(CollectionEntryRequest request, Authentication authentication) {
         User user = tokenService.getUserFromAuthentication(authentication);
         log.debug("User (ID:{}) is creating CollectionEntry for volume #{} of Manga (malID:{}), with type:{}.",
                 user.getId(), request.volumeNumber(), request.malId(), request.type());
@@ -131,17 +131,17 @@ public class CollectionEntryService {
         );
     }
 
-    private void editVolumeEntry(CollectionEntry volumeEntry, CollectionEntryRequest request) {
+    private void editVolumeEntry(CollectionEntry collectionEntry, CollectionEntryRequest request) {
         if (request.edition() != null) {
-            volumeEntry.setEdition(request.edition());
+            collectionEntry.setEdition(request.edition());
         }
 
         if (request.notes() != null) {
-            volumeEntry.setNotes(request.notes());
+            collectionEntry.setNotes(request.notes());
         }
 
         if (request.datePurchased() != null) {
-            volumeEntry.setDatePurchased(request.datePurchased());
+            collectionEntry.setDatePurchased(request.datePurchased());
         }
     }
 

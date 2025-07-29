@@ -50,14 +50,13 @@ public class LibraryControllerTest {
     @Autowired
     private JacksonTester<MangaEntryRequest> jsonRequest;
 
-    private MangaDto mangaDto;
     private MangaEntryDto mangaEntryDto;
     private MangaEntryRequest createRequest;
     private MangaEntryRequest updateRequest;
 
     @BeforeEach
     public void setUp() {
-        mangaDto = new MangaDto(
+        MangaDto mangaDto = new MangaDto(
                 1L,
                 "Test Manga",
                 "Test Manga",
