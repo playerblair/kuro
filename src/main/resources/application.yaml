@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: Kuro
+
+  datasource:
+    url: jdbc:sqlite:./data/library.db
+    driver-class-name: org.sqlite.JDBC
+
+  jpa:
+    database-platform: org.hibernate.community.dialect.SQLiteDialect
+    hibernate:
+      ddl-auto: update
+
+rsa:
+  private-key: classpath:certs/private.pem
+  public-key: classpath:certs/public.pem
