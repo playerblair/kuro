@@ -34,7 +34,7 @@ public class AuthService {
         if (userRepository.existsByUsername(request.username())) {
             throw new UserAlreadyExistsException(request.username());
         }
-        User user = userRepository.save(new User(null, request.username(), encoder.encode(request.password())));
+        User user = userRepository.save(User.create(request.username(), encoder.encode(request.password())));
         log.info("Created {}", user);
     }
 
