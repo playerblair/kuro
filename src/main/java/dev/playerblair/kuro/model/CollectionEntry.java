@@ -41,7 +41,7 @@ public class CollectionEntry {
     @Column(name = "purchase_date")
     private LocalDate purchaseDate;
 
-    public static CollectionEntry toCollectionEntry
+    public static CollectionEntry create
             (User user, Manga manga, String edition, Integer volumeNumber, String notes, LocalDate purchaseDate) {
         CollectionEntry entry = new CollectionEntry();
 

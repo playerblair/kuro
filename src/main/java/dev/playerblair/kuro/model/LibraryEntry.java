@@ -42,7 +42,7 @@ public class LibraryEntry {
 
     private String notes;
 
-    public static LibraryEntry toLibraryEntry
+    public static LibraryEntry create
             (User user, Manga manga, Progress progress, Integer chaptersRead, Integer volumesRead, Integer rating, String notes) {
         LibraryEntry entry = new LibraryEntry();
 
