@@ -1,11 +1,11 @@
 package dev.playerblair.kuro.service;
 
+import dev.playerblair.kuro.exception.LibraryEntryAlreadyExistsException;
 import dev.playerblair.kuro.exception.LibraryEntryNotFoundException;
 import dev.playerblair.kuro.model.LibraryEntry;
 import dev.playerblair.kuro.model.Manga;
 import dev.playerblair.kuro.model.User;
 import dev.playerblair.kuro.repository.LibraryEntryRepository;
-import dev.playerblair.kuro.repository.UserRepository;
 import dev.playerblair.kuro.request.LibraryEntryRequest;
 import dev.playerblair.kuro.util.AuthenticationHelper;
 import lombok.extern.slf4j.Slf4j;
@@ -48,9 +48,12 @@ public class LibraryService {
     public LibraryEntry createLibraryEntry(LibraryEntryRequest request, Authentication authentication) {
         User user = helper.getCurrentUser(authentication);
         log.debug("{} is creating a LibraryEntry for Manga with malID: {}", user, request.malId());
+        if (libraryEntryRepository.existsByUserAndMalId(user, request.malId())) {
+            throw new LibraryEntryAlreadyExistsException(request.malId());
+        }
         Manga manga = mangaService.getManga(request.malId());
         LibraryEntry entry = libraryEntryRepository.save(
-                LibraryEntry.toLibraryEntry(
+                LibraryEntry.create(
                         user,
                         manga,
                         request.progress(),

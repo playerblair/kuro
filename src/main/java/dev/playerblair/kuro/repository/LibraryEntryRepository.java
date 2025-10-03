@@ -17,4 +17,7 @@ public interface LibraryEntryRepository extends ListCrudRepository<LibraryEntry,
 
     @Query("SELECT l FROM LibraryEntry l WHERE l.user = :user AND l.manga.malId = :malId")
     Optional<LibraryEntry> findByUserAndMalId(User user, Long malId);
+
+    @Query("SELECT COUNT(l) > 0 FROM LibraryEntry l WHERE l.user = :user AND l.manga.malId = :malId")
+    boolean existsByUserAndMalId(User user, Long malId);
 }
