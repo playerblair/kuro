@@ -48,14 +48,16 @@ public class CollectionService {
         User user = helper.getCurrentUser(authentication);
         log.debug("{} is creating a CollectionEntry for Manga with ID: {}", user, request.malId());
         Manga manga = mangaService.getManga(request.malId());
-        CollectionEntry entry = collectionEntryRepository.save(CollectionEntry.toCollectionEntry(
-                user,
-                manga,
-                request.edition(),
-                request.volumeNumber(),
-                request.notes(),
-                request.purchaseDate()
-        ));
+        CollectionEntry entry = collectionEntryRepository.save(
+                CollectionEntry.create(
+                        user,
+                        manga,
+                        request.edition(),
+                        request.volumeNumber(),
+                        request.notes(),
+                        request.purchaseDate()
+                )
+        );
         log.debug("Created {}", entry);
         return entry;
     }
