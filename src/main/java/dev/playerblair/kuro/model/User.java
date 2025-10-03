@@ -23,4 +23,18 @@ public class User {
 
     @Column(name = "password", nullable = false)
     private String password;
+
+    public static User create(String username, String password) {
+        User user = new User();
+        if (username == null) throw new IllegalArgumentException("Username cannot be null");
+        user.setUsername(username);
+        if (password == null) throw new IllegalArgumentException("Password cannot be null");
+        user.setPassword(password);
+        return user;
+    }
+
+    @Override
+    public String toString() {
+        return "User (ID:" + id + ")";
+    }
 }
