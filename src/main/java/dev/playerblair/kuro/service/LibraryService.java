@@ -73,6 +73,7 @@ public class LibraryService {
                 .orElseThrow(() -> new LibraryEntryNotFoundException(malId));
         log.debug("{} is updating {}", user, entry);
         entry.update(request.progress(), request.chaptersRead(), request.volumesRead(), request.rating(), request.notes());
+        libraryEntryRepository.save(entry);
         log.info("Updated {}", entry);
     }
 

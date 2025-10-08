@@ -64,10 +64,11 @@ public class CollectionService {
 
     public void updateCollectionEntry(Long id, CollectionEntryRequest request, Authentication authentication) {
         User user = helper.getCurrentUser(authentication);
-        log.debug("{} is updating CollectionEntry with ID: {}", user, id);
         CollectionEntry entry = collectionEntryRepository.findByIdAndUser(id, user)
                 .orElseThrow(() -> new CollectionEntryNotFoundException(id));
+        log.debug("{} is updating {}", user, entry);
         entry.update(request.notes(), request.purchaseDate());
+        collectionEntryRepository.save(entry);
         log.debug("Updated {}", entry);
     }
 
