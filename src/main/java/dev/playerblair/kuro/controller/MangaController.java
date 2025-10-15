@@ -22,13 +22,13 @@ public class MangaController {
 
     @GetMapping("/search")
     public ResponseEntity<JikanSearchResponse> searchManga(
-            @NotBlank @RequestParam String query,
-             @Min(1) @RequestParam(required = false, defaultValue = "1") int page) {
+            @NotBlank(message = "{not_blank.query}") @RequestParam String query,
+             @Min(value = 1, message = "{min.page}") @RequestParam(required = false, defaultValue = "1") int page) {
         return ResponseEntity.ok(mangaService.searchManga(query, page));
     }
 
     @GetMapping("/{malId}")
-    public ResponseEntity<Manga> getManga(@Min(1) @PathVariable Long malId) {
+    public ResponseEntity<Manga> getManga(@Min(value = 1, message = "{min.malId}") @PathVariable Long malId) {
         return ResponseEntity.ok(mangaService.getManga(malId));
     }
 }
