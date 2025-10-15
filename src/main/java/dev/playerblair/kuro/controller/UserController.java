@@ -1,6 +1,7 @@
 package dev.playerblair.kuro.controller;
 
 
+import dev.playerblair.kuro.dto.SimpleResponse;
 import dev.playerblair.kuro.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -19,8 +20,9 @@ public class UserController {
     }
 
     @DeleteMapping
-    public ResponseEntity<Void> deleteUser(Authentication authentication) {
+    public ResponseEntity<SimpleResponse> deleteUser(Authentication authentication) {
         userService.deleteUser(authentication);
-        return ResponseEntity.noContent().build();
+        SimpleResponse response = new SimpleResponse("User deleted successfully");
+        return ResponseEntity.ok(response);
     }
 }
