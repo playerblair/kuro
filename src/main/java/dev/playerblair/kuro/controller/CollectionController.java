@@ -1,11 +1,14 @@
 package dev.playerblair.kuro.controller;
 
 import dev.playerblair.kuro.dto.CollectionEntryDto;
+import dev.playerblair.kuro.dto.SimpleResponse;
 import dev.playerblair.kuro.model.CollectionEntry;
 import dev.playerblair.kuro.request.CollectionEntryRequest;
 import dev.playerblair.kuro.request.ValidationGroups;
 import dev.playerblair.kuro.service.CollectionService;
-import lombok.Builder;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.groups.Default;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -33,20 +36,22 @@ public class CollectionController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CollectionEntryDto> getCollectionEntry
-            (@PathVariable Long id, Authentication authentication) {
+    public ResponseEntity<CollectionEntryDto> getCollectionEntry(
+            @PathVariable @NotNull(message = "{not_null.id}") @Min(value = 1, message = "{min.id}") Long id,
+            Authentication authentication) {
         return ResponseEntity.ok(collectionService.getCollectionEntry(id, authentication).toDto());
     }
 
     @GetMapping("/manga/{malId}")
-    public ResponseEntity<List<CollectionEntryDto>> getMangaCollection
-            (@PathVariable Long malId, Authentication authentication) {
+    public ResponseEntity<List<CollectionEntryDto>> getMangaCollection(
+            @PathVariable @NotNull(message = "{not_null.malId}") @Min(value = 1, message = "{min.malId}") Long malId,
+            Authentication authentication) {
         return null;
     }
 
     @PostMapping
     public ResponseEntity<CollectionEntryDto> createCollectionEntry(
-            @Validated({ValidationGroups.Create.class, Builder.Default.class}) CollectionEntryRequest request,
+            @Validated({ValidationGroups.Create.class, Default.class}) @RequestBody CollectionEntryRequest request,
             Authentication authentication) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -54,17 +59,21 @@ public class CollectionController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Void> updateCollectionEntry(
-            @PathVariable Long id,
-            @Validated({ValidationGroups.Update.class, Builder.Default.class}) CollectionEntryRequest request,
+    public ResponseEntity<SimpleResponse> updateCollectionEntry(
+            @PathVariable @NotNull(message = "{not_null.id}") @Min(value = 1, message = "{min.id}") Long id,
+            @Validated({Default.class}) @RequestBody CollectionEntryRequest request,
             Authentication authentication) {
         collectionService.updateCollectionEntry(id, request, authentication);
-        return ResponseEntity.noContent().build();
+        SimpleResponse response = new SimpleResponse("CollectionEntry updated successfully");
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCollectionEntry(@PathVariable Long id, Authentication authentication) {
+    public ResponseEntity<SimpleResponse> deleteCollectionEntry(
+            @PathVariable @NotNull(message = "{not_null.id}") @Min(value = 1, message = "{min.id}") Long id,
+            Authentication authentication) {
         collectionService.deleteCollectionEntry(id, authentication);
-        return ResponseEntity.noContent().build();
+        SimpleResponse response = new SimpleResponse("CollectionEntry deleted successfully");
+        return ResponseEntity.ok(response);
     }
 }
