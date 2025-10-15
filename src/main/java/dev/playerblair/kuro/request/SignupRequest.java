@@ -9,6 +9,7 @@ public record SignupRequest(
         @Size(min = 3, message = "Username must be at least 3 characters")
         String username,
 
+        @NotBlank(message = "Password cannot be blank")
         @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}$",
                 message = "Password must be at least 8 characters with at least 1 uppercase character, lowercase character, and digit")
         String password
