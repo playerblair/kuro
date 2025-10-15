@@ -1,5 +1,6 @@
 package dev.playerblair.kuro.controller;
 
+import dev.playerblair.kuro.dto.SimpleResponse;
 import dev.playerblair.kuro.dto.Token;
 import dev.playerblair.kuro.request.LoginRequest;
 import dev.playerblair.kuro.request.SignupRequest;
@@ -25,9 +26,10 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<Void> signup(@Valid @RequestBody SignupRequest request) {
+    public ResponseEntity<SimpleResponse> signup(@Valid @RequestBody SignupRequest request) {
         authService.signup(request);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        SimpleResponse response = new SimpleResponse("Profile created successfully");
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PostMapping("/login")
