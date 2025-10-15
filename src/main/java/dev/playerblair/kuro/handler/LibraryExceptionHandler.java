@@ -1,6 +1,7 @@
 package dev.playerblair.kuro.handler;
 
 import dev.playerblair.kuro.dto.ErrorResponse;
+import dev.playerblair.kuro.exception.LibraryEntryAlreadyExistsException;
 import dev.playerblair.kuro.exception.LibraryEntryNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,5 +21,15 @@ public class LibraryExceptionHandler {
                 LocalDateTime.now()
         );
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
+
+    @ExceptionHandler(LibraryEntryAlreadyExistsException.class)
+    public ResponseEntity<ErrorResponse> handleLibraryEntryAlreadyExistsException(LibraryEntryAlreadyExistsException exception) {
+        ErrorResponse response = new ErrorResponse(
+                400,
+                exception.getMessage(),
+                LocalDateTime.now()
+        );
+        return ResponseEntity.badRequest().body(response);
     }
 }
