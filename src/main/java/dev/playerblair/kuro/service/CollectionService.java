@@ -35,6 +35,14 @@ public class CollectionService {
         return results;
     }
 
+    public List<CollectionEntry> getMangaCollection(Long malId, Authentication authentication) {
+        User user = helper.getCurrentUser(authentication);
+        log.debug("{} is fetching their collection for Manga with malID: {}", user, malId);
+        List<CollectionEntry> results = collectionEntryRepository.findAllByUserAndMalId(user, malId);
+        log.info("Found {} collection entries for Manga with malID: {}", results.size(), malId);
+        return results;
+    }
+
     public CollectionEntry getCollectionEntry(Long id, Authentication authentication) {
         User user = helper.getCurrentUser(authentication);
         log.debug("{} is fetching CollectionEntry with ID: {}", user, id);

@@ -15,6 +15,9 @@ public interface CollectionEntryRepository extends ListCrudRepository<Collection
     @Query("SELECT c FROM CollectionEntry c WHERE c.user = :user")
     List<CollectionEntry> findAllByUser(User user);
 
+    @Query("SELECT c FROM CollectionEntry c WHERE c.user = :user AND c.manga.malId = :malId")
+    List<CollectionEntry> findAllByUserAndMalId(User user, Long malId);
+
     @Query("SELECT c FROM CollectionEntry c WHERE id = :id AND c.user = :user")
     Optional<CollectionEntry> findByIdAndUser(Long id, User user);
 }

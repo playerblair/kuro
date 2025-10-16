@@ -35,18 +35,20 @@ public class CollectionController {
                 .toList());
     }
 
+    @GetMapping("/manga/{malId}")
+    public ResponseEntity<List<CollectionEntryDto>> getMangaCollection(
+            @PathVariable @NotNull(message = "{not_null.malId}") @Min(value = 1, message = "{min.malId}") Long malId,
+            Authentication authentication) {
+        return ResponseEntity.ok(collectionService.getMangaCollection(malId, authentication).stream()
+                .map(CollectionEntry::toDto)
+                .toList());
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<CollectionEntryDto> getCollectionEntry(
             @PathVariable @NotNull(message = "{not_null.id}") @Min(value = 1, message = "{min.id}") Long id,
             Authentication authentication) {
         return ResponseEntity.ok(collectionService.getCollectionEntry(id, authentication).toDto());
-    }
-
-    @GetMapping("/manga/{malId}")
-    public ResponseEntity<List<CollectionEntryDto>> getMangaCollection(
-            @PathVariable @NotNull(message = "{not_null.malId}") @Min(value = 1, message = "{min.malId}") Long malId,
-            Authentication authentication) {
-        return null;
     }
 
     @PostMapping

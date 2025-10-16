@@ -96,6 +96,35 @@ public class CollectionServiceMockTest {
         verify(authenticationHelper).getCurrentUser(mockAuthentication);
         verify(collectionEntryRepository, never()).findAllByUser(mockUser);
     }
+
+    @Test
+    public void whenGetMangaCollectionIsCalled_shouldReturnMangaCollection() {
+        // given
+        when(authenticationHelper.getCurrentUser(mockAuthentication)).thenReturn(mockUser);
+        when(collectionEntryRepository.findAllByUserAndMalId(mockUser, 1L)).thenReturn(List.of(collectionEntry));
+
+        // when
+        List<CollectionEntry> collection = collectionService.getMangaCollection(1L, mockAuthentication);
+
+        // then
+        assertEquals(1, collection.size());
+        verify(authenticationHelper).getCurrentUser(mockAuthentication);
+        verify(collectionEntryRepository).findAllByUserAndMalId(mockUser, 1L);
+    }
+
+    @Test
+    public void whenGetMangaCollectionIsCalled_givenUsernameNotFound_shouldThrowException() {
+        // given
+        when(authenticationHelper.getCurrentUser(mockAuthentication)).thenThrow(UsernameNotFoundException.class);
+
+        // when
+        assertThrows(
+                UsernameNotFoundException.class,
+                () -> collectionService.getMangaCollection(1L, mockAuthentication)
+        );
+        verify(authenticationHelper).getCurrentUser(mockAuthentication);
+        verify(collectionEntryRepository, never()).findAllByUserAndMalId(mockUser, 1L);
+    }
     
     @Test
     public void whenGetCollectionEntryIsCalled_shouldReturnCollectionEntry() {

@@ -118,6 +118,43 @@ public class CollectionControllerMockTest {
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
 				.andExpect(content().string(containsString("User not found with username: testuser")));
 	}
+
+    @Test
+    @WithMockUser
+    public void whenGetMangaCollectionIsCalled_shouldReturn200() throws Exception {
+        // given
+        when(collectionService.getMangaCollection(eq(1L), any(Authentication.class)))
+                .thenReturn(List.of(collectionEntry));
+
+        // when & then
+        mockMvc.perform(get("/api/collection/manga/{malId}", 1L)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().json(jsonCollection.write(List.of(collectionEntry.toDto())).getJson()));
+    }
+
+    @Test
+    public void whenGetMangaCollectionIsCalled_givenUnauthorisedUser_shouldReturn403() throws Exception {
+        // when & then
+        mockMvc.perform(get("/api/collection/manga/{malId}", 1L))
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
+    @WithMockUser
+    public void whenGetMangaCollectionIsCalled_givenUsernameNotFound_shouldReturn404() throws Exception {
+        // given
+        when(collectionService.getMangaCollection(eq(1L), any(Authentication.class)))
+                .thenThrow(new UsernameNotFoundException("User not found with username: testuser"));
+
+        // when & then
+        mockMvc.perform(get("/api/collection/manga/{malId}", 1L)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().string(containsString("User not found with username: testuser")));
+    }
 	
 	@Test
 	@WithMockUser
